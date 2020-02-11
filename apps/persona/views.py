@@ -9,8 +9,8 @@ from django.template.loader import render_to_string
 
 class ListaPacienteView(ListView):
     model = Paciente
-    template_name = "paciente/paciente_list.html"
-    context_object_name = 'paciente_list'
+    template_name = "paciente/paciente.html"
+    context_object_name = 'object_list'
     queryset = Paciente.objects.filter(estado=True)
 
     def get_context_data(self, **kwargs):
@@ -25,11 +25,13 @@ def BasePaciente(request, form, template_name):
             form.save()
             data['hide_modal'] = True
             data['form_is_valid'] = True
+            pacientes = Paciente.objects.filter(estado=True)
+            data['object_list'] = render_to_string('paciente/paciente_list.html',{'object_list':pacientes})
         else:
             data['form_is_valid'] = False
+
     context = {'form': form}
-    data['html_form'] = render_to_string(
-        template_name, context, request=request)
+    data['html_form'] = render_to_string(template_name, context, request=request)
 
     return JsonResponse(data)
 
@@ -58,12 +60,14 @@ def EliminarPaciente(request, id):
     if request.method == 'POST':
         paciente.estado = False
         paciente.save()
-        paciente = Paciente.objects.filter(estado=True)
         data['form_is_valid'] = True
+        data['hide_modal'] = True
+        paciente = Paciente.objects.filter(estado=True)
+        data['object_list'] = render_to_string('paciente/paciente_list.html',{'object_list':paciente})
+        
     else:
         
         context = {'paciente': paciente}
-        data['html_form'] = render_to_string(
-            'paciente/paciente_eliminar.html', context, request=request)
+        data['html_form'] = render_to_string('paciente/paciente_eliminar.html', context, request=request)
 
     return JsonResponse(data)

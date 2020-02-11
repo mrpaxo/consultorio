@@ -32,6 +32,7 @@ $(document).ready(function () {
         success: function(data){
           if(data.form_is_valid){
             console.log('datos guardados con exito')
+            $('#table_generic tbody').html(data.object_list);
             if(data.hide_modal){
               $('#modal-generic').modal('hide');
             }       
