@@ -1,0 +1,112 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}Consultas{% endblock %}
+{% block content %}
+<div class="row">
+    {% csrf_token %}
+    <div class="col-lg-12 mb-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h3 class="m-0 font-weight-bold text-primary">Consulta</h3>
+            </div>            
+            <div class="card-body">
+              <div align = 'center'>
+                  <button class="btn btn-success show-form" data-url="{% url 'CrearConsulta' %}">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-align-justify"></i>
+                      </span>
+                      Nuevo 
+                    </button>
+              </div>
+              <table id="table_generic" class="table table-hover">
+                <thead>
+                  <tr>
+                    
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido Paterno</th>
+                    <th scope="col">Apellido Materno</th>
+                    <th scope="col">Opciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for p in consulta_list %}
+                    <tr>
+                        <td>{{ p.paciente.nombre}}</td>
+                        <td>{{ p.paciente.ap_paterno }}</td>
+                        <td>{{ p.paciente.ap_materno }}</td>
+                        <td>
+                          <button class="btn btn-warning show-form-update" data-url="{% url 'ActualizarConsulta' p.id %}">
+                            <span class="icon text-white-50">
+                              <i class="fas fa-user"></i>
+                            </span>
+                            Editar 
+                          </button>
+                          <button class="btn btn-danger show-form-delete" data-url="{% url 'EliminarConsulta' p.id %}">
+                            <span class="icon text-white-50">
+                              <i class="fas fa-trash"></i>
+                            </span>
+                            Eliminar 
+                          </button>
+                          <button class="btn btn-info show-form"  data-url="{% url 'CrearReceta' p.id %}">
+                              <span class="icon text-white-50">
+                                <i class="fas fa-book-medical"></i>
+                              </span>
+                              Receta
+                          </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                      <tr><td>no se encontraron registros</td></tr>
+                  {% endfor %} 
+                
+                </tbody>
+                </table>
+                <div class="modal fade" id = "modal-generic">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                     
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+{% endblock content %}
+{% block plugins %}
+  <script src="{% static "vendor/datatables/jquery.dataTables.min.js" %}"></script>
+  <script src="{% static "vendor/datatables/dataTables.bootstrap4.min.js" %}"></script>
+  <script src="{% static "js/modal_crud.js" %}">//plugin que nos permite hacer un crud generico</script>
+{% endblock plugins %}
+{% block javascript %}
+ <script>
+  $('#table_generic').DataTable();
+ 
+  function funcion_generica(data){
+      console.log(data)
+      if (data.lista_receta){
+          agrega_fila(data);
+      } else if (data.hidden_field)
+      {
+        hidden_field(data);
+      }    
+  }
+  function hidden_field(data){
+    console.log('entro campo oculto')
+    if(data.hidden_field){          
+          $.each(data.hidden_field, function(i,item){
+            $('<input>').attr({
+              type: 'text',
+              id: item.nombre,
+              name:item.nombre,
+              value: item.valor
+          }).appendTo('#receta_actualiza');
+        })
+    }
+  }
+  function agrega_fila(data){
+    $('#table_receta').append('<tr id='+data.receta_descripcion.id+'><td>'+data.receta_descripcion.medicamento+'</td><td>'+data.receta_descripcion.indicacion+'</td><td> <button type="button" onclick = elimina_descripcion('+data.receta_descripcion.id+') class="btn btn-info" ><span class="icon text-white-50"><i class="fas fa-trash"></i></span></button></td></tr>');
+  }
+  
+ </script>
+{% endblock javascript %}

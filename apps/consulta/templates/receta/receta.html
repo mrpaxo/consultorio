@@ -1,0 +1,68 @@
+
+{% load static %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static "css/print-table.css" %}">
+
+{% endblock %}
+
+{% block content %}
+<button onclick="imprimir();">Imprime</button>
+{{ object }}
+<table name="table" id="table" cellspacing="0">
+  <tr>
+  <th rowspan = "2"> <img style=" max-width: 222px;
+    max-height: 100px;" src="{% static "img/logo.jpg" %}"></th>
+  <th colspan="2"><h3> Dr Francisco Manuel Gomez Hernandez</h3></th>
+  </tr>
+  <tr>
+    <td colspan="2">CARR. VHSA. FRONTERA K.M. 2.5, CASA BLANCA, CENTRO, <br> 86060 Villahermosa, Tab.</td>
+  </tr>
+  <tr>    
+    <td>Diagnostico:</td>
+    <td colspan="2">{{ object.diagnostico }}</td>
+  </tr>
+  <tr>
+    <td>Paciente:</td>
+    <td colspan="2">{{ object.paciente_fullname }}</td>
+    
+  </tr>
+  <tr>
+    <td>Medicamento</td>
+    <td colspan="2">Indicaciones</td>
+  </tr>
+  <tbody>
+      {% for i in object.receta.descripcion.all %}
+        <tr>
+            <td>{{ i.medicamento}}</td>
+            <td colspan="2">{{ i.indicacion }}</td>
+           
+        </tr>
+        {% empty %}
+          <tr><td>no se encontraron registros</td></tr>
+      {% endfor %} 
+    
+    </tbody>
+
+</table>
+
+{% endblock content %}
+{% block javascript %}
+ <script>
+  function imprimir() {
+    var divToPrint = document.getElementById('table');
+    var htmlToPrint = '' +
+        '<style type="text/css">' +
+        'table th, table td {' +
+        'border:1px solid #000;' +
+        'padding;0.5em;' +
+        '}' +
+        '</style>';
+    htmlToPrint += divToPrint.outerHTML;
+    newWin = window.open("");
+    newWin.document.write(htmlToPrint);
+    newWin.print();
+    newWin.close();
+}
+ </script>
+{% endblock javascript %}

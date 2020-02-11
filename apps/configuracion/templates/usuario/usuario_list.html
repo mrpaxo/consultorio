@@ -1,0 +1,63 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}Usuarios{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 mb-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h3 class="m-0 font-weight-bold text-primary">Usuarios</h3>
+            </div>            
+            <div class="card-body">
+              <div align = 'center'>
+                  <button class="btn btn-success show-form" data-url="{% url 'CrearUsuario' %}">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-first-aid"></i>
+                      </span>
+                      Nuevo 
+                    </button>
+              </div>
+              <table id="table_generic" class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Nombre Completo</th>
+                    <th scope="col">Opciones</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for p in usuario_list %}
+                    <tr>
+                        <td>{{ p.username}}</td>
+                        <td>{{p.first_name}} {{p.last_name}}</td>
+                        <td>
+                        </td>
+                    </tr>
+                    {% empty %}
+                      <tr><td>no se encontraron registros</td></tr>
+                  {% endfor %} 
+                
+                </tbody>
+                </table>
+                <div class="modal fade" id = "modal-generic">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+{% endblock content %}
+{% block plugins %}
+  <script src="{% static "vendor/datatables/jquery.dataTables.min.js" %}"></script>
+  <script src="{% static "vendor/datatables/dataTables.bootstrap4.min.js" %}"></script>
+  <script src="{% static "js/modal_crud.js" %}">//plugin que nos permite hacer un crud generico</script>
+{% endblock plugins %}
+{% block javascript %}
+ <script>
+  $('#table_generic').DataTable();
+ </script>
+{% endblock javascript %}

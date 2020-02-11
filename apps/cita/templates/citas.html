@@ -1,0 +1,139 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}Citas{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 mb-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h3 class="m-0 font-weight-bold text-primary">Citas</h3>
+            </div>
+            <div id='calendar'></div>
+            <div class="modal fade" id = "modal-generic">
+              <div class="modal-dialog">
+                <div class="modal-content">
+               
+                </div>
+              </div>
+            </div>
+        </div>    
+    </div>
+</div>
+{% endblock content %}
+{% block plugins %}
+
+<link href={% static "fullcalendar/packages/core/main.css" %} rel='stylesheet' />
+<link href={% static "fullcalendar/packages/daygrid/main.css" %} rel='stylesheet' />
+<link href={% static "fullcalendar/packages/timegrid/main.css" %} rel='stylesheet' />
+<link href={% static "jquery-ui/jquery-ui.min.css" %} rel='stylesheet' />
+<link href={% static "timepicker/dist/jquery-ui-timepicker-addon.min.css" %} rel='stylesheet' />
+
+
+<script src={% static "jquery-ui/jquery-ui.min.js" %}></script>
+<script src={% static "fullcalendar/packages/core/main.js" %}></script>
+<script src={% static "fullcalendar/packages/interaction/main.js" %}></script>
+<script src={% static "fullcalendar/packages/daygrid/main.js" %}></script>
+<script src={% static "fullcalendar/packages/timegrid/main.js" %}></script>
+<script src={% static "timepicker/dist/jquery-ui-timepicker-addon.min.js" %}></script>
+<script src={% static "timepicker/dist/jquery-ui-sliderAccess.js" %}></script>
+<script src={% static "timepicker/dist/i18n/jquery-ui-timepicker-addon-i18n.min.js" %}></script>
+<!--script src="{% static "js/modal_crud.js" %}">//plugin que nos permite hacer un crud generico</script-->
+{% endblock plugins %}
+{% block javascript %}
+<script>
+$(document).ready(function () {
+  persona=$("#id_paciente");
+  MuestraFormulario("{% url "CrearCita" %}",show=false)
+});
+var MuestraFormulario = function(url,show){
+    $.ajax({
+      url:url,
+      type: 'get',
+      dataType:'json',
+      beforeSend: function(){
+        if(show == true){
+          $('#modal-generic').modal('show');
+        }        
+      },
+      success:function(data){
+        $('#modal-generic .modal-content').html(data.html_form)
+      }
+    });
+  };
+  var GuardaFormulario = function(){
+    var form = $(this);    
+    $.ajax({
+        url: form.attr('data-url'),
+        data: form.serialize(),
+        type: form.attr('method'),
+        dataType: 'json',
+        success: function(data){
+          if(data.form_is_valid){
+            data_valid = true;
+            $('#modal-generic').modal('hide');
+            console.log('datos guardados con exito')
+                     
+          }
+          else {
+            $('#modal-generic .modal-content').html(data.html.form)
+          }
+        }
+    })
+    return false;
+  }
+  // crear
+  $("#modal-generic").on("submit",".create-form",GuardaFormulario)
+  // actualizar
+  $("#modal-generic").on("submit",".update-form",GuardaFormulario)
+
+  /*
+  $("#table_generic").on("click",".show-form-delete",MuestraFormulario)
+  $("#modal-generic").on("submit",".delete-form",GuardaFormulario)*/
+
+ document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      defaultDate: '2019-09-01',
+      navLinks: true, // can click day/week names to navigate views
+      selectable: true,
+      selectMirror: true,
+      select: function(arg) {
+        $('#modal-generic').modal('show');
+        var inicio_input = $("[name='inicio']")
+        var d = new Date(arg.start)
+        var d_format = d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear() +' '+"12:00"      
+        inicio_input.datetimepicker({ dateFormat: 'dd-mm-yy'})
+        inicio_input.val(d_format);
+         /* calendar.addEvent({
+            title: form,
+            start: arg.start,
+            end: arg.end,
+            allDay: arg.allDay
+          })*/
+        //}
+        //calendar.unselect()
+      },
+
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      events: {
+        url: "{% url "ListaCitas" %}",
+      },
+       eventClick: function(arg) {
+      
+        MuestraFormulario("http://127.0.0.1:8000/cita/citas/"+arg.event.id+"/actualizar",show=true)
+        
+      }
+    });
+  
+    calendar.render();
+  });
+</script>
+{% endblock javascript %}
