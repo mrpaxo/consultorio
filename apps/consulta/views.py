@@ -8,8 +8,8 @@ from django.template.loader import render_to_string
 
 class ListaConsultaView(ListView):
     model = Consulta
-    template_name = "consulta/consulta_list.html"
-    context_object_name = 'consulta_list'
+    template_name = "consulta/consulta.html"
+    context_object_name = 'object_list'
     queryset = Consulta.objects.filter(estado=True)
 
     def get_context_data(self, **kwargs):
@@ -24,11 +24,12 @@ def BaseGuardar(request, form, template_name):
             form.save()
             data['hide_modal'] = True
             data['form_is_valid'] = True
+            consulta = Consulta.objects.filter(estado = True)
+            data['object_list'] = render_to_string('consulta/consulta_list.html',{'object_list':consulta})
         else:
             data['form_is_valid'] = False
     context = {'form': form}
-    data['html_form'] = render_to_string(
-        template_name, context, request=request)
+    data['html_form'] = render_to_string(template_name, context, request=request)
 
     return JsonResponse(data)
 
@@ -57,7 +58,9 @@ def EliminarConsulta(request, id):
         consulta.estado = False
         consulta.save()
         consulta = Consulta.objects.filter(estado=True)
+        data['object_list'] = render_to_string('consulta/consulta_list.html',{'object_list':consulta})
         data['form_is_valid'] = True
+        data['hide_modal'] = True
     else:
         context = {'consulta': consulta}
         data['html_form'] = render_to_string(

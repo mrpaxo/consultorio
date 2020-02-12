@@ -7,7 +7,7 @@ import json , csv
 
 def HombreMujeresGrafica(request):
 
-    p = Paciente.objects.all().only("sexo")
+    p = Paciente.objects.filter(estado= True).only("sexo")
     mujeres = p.filter(sexo = "F").count()
     hombres = p.filter(sexo = "M").count()
    
