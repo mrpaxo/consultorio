@@ -16,6 +16,7 @@
         </span>
         Eliminar 
       </button>
+      
       <button class="btn btn-info show-form"  data-url="{% url 'CrearReceta' p.id %}">
           <span class="icon text-white-50">
             <i class="fas fa-book-medical"></i>
@@ -27,3 +28,4 @@
 {% empty %}
   <tr><td>no se encontraron registros</td></tr>
 {% endfor %} 
+

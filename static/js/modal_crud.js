@@ -12,7 +12,6 @@ $(document).ready(function () {
       success:function(data){
         $('#modal-generic .modal-content').html(data.html_form)
         $(".textinput,.select,.emailinput,.checkboxinput").each(function(){
-          console.log(this)
            $(this).addClass("form-control")
          });
         if(data.extra_function){
@@ -31,7 +30,6 @@ $(document).ready(function () {
         dataType: 'json',
         success: function(data){
           if(data.form_is_valid){
-            console.log('datos guardados con exito')
             $('#table_generic tbody').html(data.object_list);
             if(data.hide_modal){
               $('#modal-generic').modal('hide');
@@ -41,7 +39,6 @@ $(document).ready(function () {
             }
           }
           else {
-            console.log('entro else')
             $('#modal-generic .modal-content').html(data.html_form)
           }
         }
@@ -52,6 +49,7 @@ $(document).ready(function () {
   $(".show-form").click(MuestraFormulario);
   $("#modal-generic").on("submit",".create-form",GuardaFormulario)
   // actualizar
+  $("#table_generic").on("click",".show-form",MuestraFormulario)
   $("#table_generic").on("click",".show-form-update",MuestraFormulario)
   $("#modal-generic").on("submit",".update-form",GuardaFormulario)
 

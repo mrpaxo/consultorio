@@ -52,23 +52,13 @@
 {% endblock plugins %}
 {% block javascript %}
  <script>
-  $('#table_generic').DataTable();
- 
-  function funcion_generica(data){
-      console.log(data)
-      if (data.lista_receta){
-          agrega_fila(data);
-      } else if (data.hidden_field)
-      {
-        hidden_field(data);
-      }    
-  }
+  $('#table_generic').DataTable(); 
+
   function hidden_field(data){
-    console.log('entro campo oculto')
     if(data.hidden_field){          
           $.each(data.hidden_field, function(i,item){
             $('<input>').attr({
-              type: 'text',
+              type: 'hidden',
               id: item.nombre,
               name:item.nombre,
               value: item.valor
@@ -77,8 +67,16 @@
     }
   }
   function agrega_fila(data){
-    $('#table_receta').append('<tr id='+data.receta_descripcion.id+'><td>'+data.receta_descripcion.medicamento+'</td><td>'+data.receta_descripcion.indicacion+'</td><td> <button type="button" onclick = elimina_descripcion('+data.receta_descripcion.id+') class="btn btn-info" ><span class="icon text-white-50"><i class="fas fa-trash"></i></span></button></td></tr>');
+    $('#table_receta').append('<tr id='+data.receta_descripcion.id+'><td>'+data.receta_descripcion.medicamento+'</td><td>'+data.receta_descripcion.indicacion+'</td><td> <button type="button" onclick = elimina_descripcion('+data.receta_descripcion.id+') class="btn btn-danger" ><span class="icon text-white-50"><i class="fas fa-trash"></i></span></button></td></tr>');
   }
-  
+  function funcion_generica(data){
+      if (data.receta_descripcion){
+          agrega_fila(data);
+      } 
+      if (data.hidden_field){
+        hidden_field(data);
+      }    
+  }
+
  </script>
 {% endblock javascript %}
