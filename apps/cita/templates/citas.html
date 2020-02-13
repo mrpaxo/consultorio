@@ -71,6 +71,7 @@ var MuestraFormulario = function(url,show){
           if(data.form_is_valid){
             data_valid = true;
             $('#modal-generic').modal('hide');
+            window.location.reload();
             console.log('datos guardados con exito')
                      
           }
@@ -95,12 +96,13 @@ var MuestraFormulario = function(url,show){
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+      
       header: {
         left: 'prev,next today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
-      defaultDate: '2019-09-01',
+      //defaultDate: '2019-09-01',
       navLinks: true, // can click day/week names to navigate views
       selectable: true,
       selectMirror: true,
