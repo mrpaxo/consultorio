@@ -22,6 +22,7 @@ def BaseGuardar(request, form, template_name):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
+             
             data['hide_modal'] = True
             data['form_is_valid'] = True
             consulta = Consulta.objects.filter(estado = True)

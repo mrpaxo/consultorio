@@ -11645,7 +11645,7 @@ a:focus {
 }
 
 .bg-login-image {
-  background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
+  background: url("https://image.shutterstock.com/image-vector/medicine-logo-600w-715548160.jpg");
   background-position: center;
   background-size: cover;
 }
@@ -11677,14 +11677,14 @@ form.user .form-control-user {
   font-size: 0.8rem;
   border-radius: 10rem;
   padding: 1.5rem 1rem;
-  background-color: #ea4335;
+  
 }
 
 form.user .btn-user {
   font-size: 0.8rem;
   border-radius: 10rem;
   padding: 0.75rem 1rem;
-  background-color: #ea4335;
+  
 }
 
 .btn-google {
@@ -11706,7 +11706,7 @@ form.user .btn-user {
 
 .btn-google.disabled, .btn-google:disabled {
   color: #fff;
-  background-color: #ea4335;
+  background-color: #9c8684;
   border-color: #fff;
 }
 
@@ -11758,14 +11758,20 @@ form.user .btn-user {
   -webkit-box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
 }
-
 .error {
+  display: block;
+  color: #d44d24;
+  font-size: 1rem;
+  margin-top: 1px;
+}
+
+/*.error {
   color: #5a5c69;
   font-size: 7rem;
   position: relative;
   line-height: 1;
   width: 12.5rem;
-}
+}*/
 
 @-webkit-keyframes noise-anim {
   0% {

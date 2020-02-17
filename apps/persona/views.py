@@ -23,6 +23,7 @@ def BasePaciente(request, form, template_name):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
+            data['message'] = 'Paciente guardado con exito'
             data['hide_modal'] = True
             data['form_is_valid'] = True
             pacientes = Paciente.objects.filter(estado=True)

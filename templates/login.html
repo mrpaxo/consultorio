@@ -49,6 +49,9 @@
                     </div>                
                     <input type="submit" value="Login" class="btn btn-primary btn-user btn-block">
                     <input type="hidden" name="next" value="{{ next }}">
+                    {% if form.errors %}
+                        <p style="color: red">Nombre de usuario o contraseña incorrectos</p>
+                    {% endif %}
                   </form>
                   <hr>
                   <div class="text-center">

@@ -1,5 +1,10 @@
 $(document).ready(function () {
   
+  function addGeneralClass(){
+  $(".textinput,.select,.emailinput,.checkboxinput").each(function(){
+      $(this).addClass("form-control")
+    });
+  };
   var MuestraFormulario = function(){
     var btn = $(this);
     $.ajax({
@@ -11,9 +16,7 @@ $(document).ready(function () {
       },
       success:function(data){
         $('#modal-generic .modal-content').html(data.html_form)
-        $(".textinput,.select,.emailinput,.checkboxinput").each(function(){
-           $(this).addClass("form-control")
-         });
+        addGeneralClass();
         if(data.extra_function){
           funcion_generica(data);
         }
@@ -34,12 +37,19 @@ $(document).ready(function () {
             if(data.hide_modal){
               $('#modal-generic').modal('hide');
             }       
+            if(data.message){
+              $('#notificacion').append('<div class="alert alert-success"><b>'+data.message+' </b></div>');
+              setTimeout(function () {
+                $('#notificacion').empty();
+            }, 3300);
+            }
             if(data.extra_function){
               funcion_generica(data);
             }
           }
           else {
             $('#modal-generic .modal-content').html(data.html_form)
+            addGeneralClass();
           }
         }
     })

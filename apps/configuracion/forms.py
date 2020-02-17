@@ -19,10 +19,10 @@ class MedicamentoForm(forms.ModelForm):
 
 class UsuarioForm(UserCreationForm):
     username = forms.CharField(label ='Usuario',max_length=30, required=True)
-    password1 = forms.CharField(label ='Contraseña',max_length=30, required=True)
-    password2 = forms.CharField(label ='Confirme Contraseña',max_length=30, required=True)
-    first_name = forms.CharField(label ='Apellido Paterno',max_length=30, required=True)
-    last_name = forms.CharField(label ='Apellido Materno', max_length=30, required=True)
+    password1 = forms.CharField(label ='Contraseña',max_length=30, required=True,widget=forms.TextInput(attrs={'type': 'password'}))
+    password2 = forms.CharField(label ='Confirme Contraseña',max_length=30, required=True,widget=forms.TextInput(attrs={'type': 'password'}))
+    first_name = forms.CharField(label ='Nombre',max_length=30, required=True)
+    last_name = forms.CharField(label ='Apellidos', max_length=30, required=True)
     email = forms.EmailField(max_length=254, help_text='Requiere un email valido')
 
     class Meta:
