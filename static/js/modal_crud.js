@@ -1,7 +1,7 @@
 $(document).ready(function () {
   
   function addGeneralClass(){
-  $(".textinput,.select,.emailinput,.checkboxinput").each(function(){
+  $(".textinput,.select,.emailinput,.checkboxinput,.dateinput").each(function(){
       $(this).addClass("form-control")
     });
   };

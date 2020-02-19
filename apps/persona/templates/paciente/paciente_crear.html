@@ -1,4 +1,5 @@
 {% load crispy_forms_tags %}
+{% load static %}
 <form method="POST" data-url={% url 'CrearPaciente' %} class="create-form ">
     {% csrf_token %}
     <div class="modal-header">
@@ -14,3 +15,26 @@
         <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
 </form>
+{% block plugins %}
+
+    <link href={% static "jquery-ui/jquery-ui.min.css" %} rel='stylesheet' />
+    <link href={% static "timepicker/dist/jquery-ui-timepicker-addon.min.css" %} rel='stylesheet' />
+    <script src={% static "jquery-ui/jquery-ui.min.js" %}></script>
+    <script src={% static "timepicker/dist/jquery-ui-timepicker-addon.min.js" %}></script>
+    <script src={% static "timepicker/dist/jquery-ui-sliderAccess.js" %}></script>
+    <script src={% static "timepicker/dist/i18n/jquery-ui-timepicker-addon-i18n.min.js" %}></script>
+{% endblock plugins %}
+
+{% block javascript %}
+<script>
+$(document).ready(function () {
+  
+  $("[name='fech_nac']").datepicker({ 
+      dateFormat: 'dd-mm-yy', 
+      changeMonth: true,
+      changeYear: true,
+      
+    })
+})
+</script>
+{% endblock javascript %}
