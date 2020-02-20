@@ -15,7 +15,8 @@ STATUS =((1,'Activo'),
 (3,'No Asistio'),)
 
 class CitaForm(forms.ModelForm):
-    paciente = forms.ModelChoiceField( required=True,label="Paciente",queryset=Paciente.objects.filter(estado = True).order_by('nombre'))
+    #paciente = forms.ModelChoiceField( required=True,label="Paciente",queryset=Paciente.objects.filter(estado = True).order_by(''))
+    paciente = forms.ModelChoiceField( required=False,label="Paciente",queryset=Paciente.objects.filter(estado = True).order_by('id'), widget=forms.Select(attrs={'class': 'required'}))
     inicio = forms.DateTimeField(widget=forms.DateTimeInput(format = '%d-%m-%Y %H:%M',attrs={'readonly': True}), input_formats=('%d-%m-%Y %H:%M',), required=True)
     color = forms.ChoiceField(choices = COLOR,widget=forms.Select())
     status = forms.ChoiceField(choices = STATUS,widget=forms.Select())
