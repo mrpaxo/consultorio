@@ -35,7 +35,7 @@ def BaseCitas(request, form, template_name):
 
 def Citas(request):
     events_list =[]
-    for cita in Cita.objects.filter(status=1):
+    for cita in Cita.objects.filter(status__in=[1,3]):
         event = {
             "id": cita.pk,
             "title": cita.paciente.nombre,
