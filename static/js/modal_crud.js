@@ -1,8 +1,11 @@
 $(document).ready(function () {
   
   function addGeneralClass(){
-  $(".textinput,.select,.emailinput,.checkboxinput,.dateinput,.textarea,.numberinput").each(function(){
+  $(".textinput,.emailinput,.checkboxinput,.dateinput,.textarea,.numberinput").each(function(){
       $(this).addClass("form-control")
+    });
+    $(".select").each(function(){
+      $(this).select2({width:'100%'});
     });
   };
   var MuestraFormulario = function(){
