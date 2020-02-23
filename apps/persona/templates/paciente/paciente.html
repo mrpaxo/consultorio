@@ -44,6 +44,9 @@
 </div>
 {% endblock content %}
 {% block plugins %}
+  <link href={% static "css/select2.min.css" %} rel='stylesheet' />
+  <script src={% static "js/select2.min.js" %}></script>
+  <script src={% static "js/select2_locale_es.js" %}></script>
   <script src="{% static "vendor/datatables/jquery.dataTables.min.js" %}"></script>
   <script src="{% static "vendor/datatables/dataTables.bootstrap4.min.js" %}"></script>
   <script src="{% static "js/modal_crud.js" %}">//plugin que nos permite hacer un crud generico</script>
