@@ -7,7 +7,7 @@ class EnfermedadForm(forms.ModelForm):
     
     class Meta:
         model = Enfermedad
-        fields = "__all__"
+        exclude =('estado',)
 
 
 
@@ -15,7 +15,7 @@ class MedicamentoForm(forms.ModelForm):
     
     class Meta:
         model = Medicamento
-        fields = "__all__"
+        exclude =('estado',)
 
 class UsuarioForm(UserCreationForm):
     username = forms.CharField(label ='Usuario',max_length=30, required=True)

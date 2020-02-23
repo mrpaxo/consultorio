@@ -11,7 +11,7 @@ class Medicamento(models.Model):
         return  '%s' %  (self.descripcion)
 
 class Enfermedad(models.Model):
-    codigo = models.TextField(max_length=4)
+    codigo = models.CharField(max_length=4)
     descripcion = models.TextField(max_length=100)
     estado = models.BooleanField(default= True)
 
