@@ -2,7 +2,7 @@ Django==2.2.5
 django-colorfield==0.1.15
 django-crispy-forms==1.7.2
 html5lib==1.0.1
-Pillow==6.2.0
+Pillow==9.0.0
 psycopg2
 pytz==2019.2
 reportlab==3.5.26
